@@ -1,0 +1,52 @@
+# .github/workflows/frontend-ci-cd.yml
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: ["main"] # 'main' 브랜치에 push 이벤트가 발생했을 때 실행
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. AWS 자격 증명 설정
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      # 3. Node.js 환경 설정 및 의존성 설치
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18" # 프로젝트에 맞는 Node.js 버전
+      - name: Install dependencies
+        run: npm install
+
+      # 4. React 앱 빌드
+      - name: Build React app
+        run: npm run build
+
+      # 5. 빌드 결과물을 S3에 업로드 (sync)
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./build s3://${{ secrets.AWS_S3_BUCKET_NAME }} --delete
+          # ./build 디렉토리의 내용을 S3 버킷과 동기화합니다.
+          # --delete 옵션은 S3에는 있지만 build 결과물에는 없는 파일을 삭제합니다.
+
+      # 6. CloudFront 캐시 무효화
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+          # "/*" 경로는 모든 파일의 캐시를 무효화합니다. 
+          # 프리티어에서는 월 1,000건의 무효화 요청이 무료입니다.
