@@ -9,12 +9,13 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 // 메인 화면 USER 목록 클릭 후 -> 그에 해당하는 farm에 대한 정보
 // 이 부분은 앞으로 굳이 필요 없을 듯
 // farms 에 대한 정보와 farms/fid 정도
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const UserPlaces = () => {
   const [loadedPlaces, setLoadedPlaces] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const userId = useParams().userId;
-  const BASE_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchPlaces = async () => {

@@ -10,6 +10,8 @@ import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import "./PlaceItem.css";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const PlaceItem = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
@@ -27,7 +29,6 @@ const PlaceItem = (props) => {
   const cancelDeleteHandler = () => {
     setShowConfirmModal(false);
   };
-  const BASE_URL = process.env.REACT_APP_API_URL;
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
     try {

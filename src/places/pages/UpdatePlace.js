@@ -15,6 +15,8 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./PlaceForm.css";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const UpdatePlace = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -35,7 +37,6 @@ const UpdatePlace = () => {
     },
     false
   );
-  const BASE_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchPlace = async () => {

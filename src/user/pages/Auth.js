@@ -14,6 +14,7 @@ import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./Auth.css";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const Auth = () => {
   const auth = useContext(AuthContext);
@@ -58,7 +59,6 @@ const Auth = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
-  const BASE_URL = process.env.REACT_APP_API_URL;
   const authSubmitHandler = async (event) => {
     event.preventDefault();
 

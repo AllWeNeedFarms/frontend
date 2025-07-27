@@ -4,11 +4,11 @@ import UsersList from "../components/UsersList";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const Users = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUsers, setLoadedUsers] = useState();
-  const BASE_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchUsers = async () => {

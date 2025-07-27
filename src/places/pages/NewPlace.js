@@ -14,6 +14,8 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./PlaceForm.css";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const NewPlace = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -36,7 +38,6 @@ const NewPlace = () => {
   );
   //
   const history = useHistory();
-  const BASE_URL = process.env.REACT_APP_API_URL;
 
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
