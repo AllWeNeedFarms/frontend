@@ -58,13 +58,14 @@ const Auth = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
+  const BASE_URL = process.env.REACT_APP_API_URL;
   const authSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/login",
+          `${BASE_URL}/api/users/login`,
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -79,7 +80,7 @@ const Auth = () => {
     } else {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/signup",
+          `${BASE_URL}/api/users/signup`,
           "POST",
           JSON.stringify({
             name: formState.inputs.name.value,

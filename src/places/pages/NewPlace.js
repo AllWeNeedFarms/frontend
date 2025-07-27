@@ -36,12 +36,13 @@ const NewPlace = () => {
   );
   //
   const history = useHistory();
+  const BASE_URL = process.env.REACT_APP_API_URL;
 
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
     try {
       await sendRequest(
-        "http://localhost:5000/api/farms",
+        `${BASE_URL}/api/farms`,
         "POST",
         JSON.stringify({
           title: formState.inputs.title.value,

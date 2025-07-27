@@ -14,12 +14,13 @@ const UserPlaces = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const userId = useParams().userId;
+  const BASE_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/farms/user/${userId}`
+          `${BASE_URL}/api/farms/user/${userId}`
         );
         setLoadedPlaces(responseData.farms);
       } catch (err) {}

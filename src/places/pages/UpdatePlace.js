@@ -35,12 +35,13 @@ const UpdatePlace = () => {
     },
     false
   );
+  const BASE_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchPlace = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/farms/${farmId}`
+          `${BASE_URL}/api/farms/${farmId}`
         );
         setLoadedPlace(responseData.farm);
         setFormData(
@@ -65,7 +66,7 @@ const UpdatePlace = () => {
     event.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:5000/api/farms/${farmId}`,
+        `${BASE_URL}/api/farms/${farmId}`,
         "PATCH",
         JSON.stringify({
           title: formState.inputs.title.value,

@@ -27,15 +27,12 @@ const PlaceItem = (props) => {
   const cancelDeleteHandler = () => {
     setShowConfirmModal(false);
   };
-
+  const BASE_URL = process.env.REACT_APP_API_URL;
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
     try {
       // 헤더 추가할 필요 업음
-      await sendRequest(
-        `http://localhost:5000/api/farms/${props.id}`,
-        "DELETE"
-      );
+      await sendRequest(`${BASE_URL}/api/farms/${props.id}`, "DELETE");
       props.onDelete(props.id); // PlcaeList
     } catch (err) {}
   };
